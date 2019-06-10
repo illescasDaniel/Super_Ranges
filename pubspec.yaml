@@ -3,6 +3,7 @@ description: Powerful yet intuitive Ranges for dart
 version: 1.0.0
 author: "Daniel Illescas Romero <illescas.daniel@protonmail.com>"
 homepage: http://github.com/illescasDaniel
+repository: https://github.com/illescasDaniel/Super_Ranges
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

@@ -1,6 +1,6 @@
 name: super_ranges
 description: Powerful yet intuitive Ranges for dart
-version: 1.0.0
+version: 1.0.1
 author: "Daniel Illescas Romero <illescas.daniel@protonmail.com>"
 homepage: http://github.com/illescasDaniel
 repository: https://github.com/illescasDaniel/Super_Ranges
@@ -8,9 +8,9 @@ repository: https://github.com/illescasDaniel/Super_Ranges
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
-dependencies:
-  flutter:
-    sdk: flutter
+#dependencies:
+#  flutter:
+#    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -20,7 +20,7 @@ dev_dependencies:
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
 # The following section is specific to Flutter.
-flutter:
+#flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:

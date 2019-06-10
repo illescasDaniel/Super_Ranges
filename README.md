@@ -1,5 +1,7 @@
 # Super Ranges
 
+[![pub package](https://img.shields.io/pub/v/super_ranges.svg)](https://pub.dev/packages/super_ranges)
+
 Powerful yet intuitive Ranges for dart.
 
 100% tests coverage.

@@ -43,4 +43,11 @@ class StrideRange extends BaseRange {
     }
     return this.reduce((acc, newValue) => acc + newValue);
   }
+
+  int get randomElement {
+    final elements = this.toList();
+    if (elements.length < 2) { return this.lowerBound; }
+    final index = Math.Random.secure().nextInt(elements.length);
+    return elements[index];
+  }
 }

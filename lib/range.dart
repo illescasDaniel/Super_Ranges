@@ -21,12 +21,14 @@ class Range extends BaseRange {
 
   // Methods
 
+  int get randomElement => this._random(min: lowerBound, max: upperBound);
+
   /// O(1) sum of the members
   @override
   int get sum {
 
     if (!ascending) {
-      return Range(this.lowerBound+1, this.upperBound+1).sum;
+      return Range(this._lowerBound+1, this._upperBound+1).sum;
     }
 
     final uB = closed ? this._upperBoundWithoutClose : (this._upperBoundWithoutClose - 1);
@@ -36,13 +38,16 @@ class Range extends BaseRange {
 
   /// O(1) count of the members. Use `expensiveLength` for default O(n) implementation.
   @override
-  int get length => this.upperBound - this.lowerBound;
+  int get length => this._upperBound - this._lowerBound;
 
   /// O(1) method to know if a values is contained within the range.
   /// If a list object is passed it will iterate that list, so it can be O(n)
   @override
   bool contains(Object value) {
-    if (value is num) {
+    if (value is int) {
+      return lowerBound <= value && value <= upperBound;
+    }
+    else if (value is num) {
       if (ascending) {
         return start <= value && (closed ? value <= end : value < end);
       } else {
@@ -58,5 +63,14 @@ class Range extends BaseRange {
       return true;
     }
     return false;
+  }
+
+  // Private
+
+  /// `min` inclusive, and `max` inclusive
+  int _random({int min, int max, bool secure = true, int seed}) {
+    if (length < 2) { return min; }
+    final randomGen = secure ? Math.Random.secure() : Math.Random(seed);
+    return min + randomGen.nextInt(max - min + 1);
   }
 }

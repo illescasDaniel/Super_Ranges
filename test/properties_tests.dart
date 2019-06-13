@@ -6,6 +6,168 @@ import 'package:super_ranges/super_ranges.dart';
 void main() {
   group('Methods & properties', () {
 
+    group('lower/upper bounds', () {
+      test('lowerBound', () {
+        expect(Range(2,4).lowerBound, 2);
+        expect(Range(1,4).lowerBound, 1);
+        expect(Range(0,4).lowerBound, 0);
+        expect(Range(-1,4).lowerBound, -1);
+        expect(Range(4,4).lowerBound, 4);
+        expect(Range(5,4).lowerBound, 5);
+        expect(Range(7,4).lowerBound, 5);
+        expect(Range(-5,4).lowerBound, -5);
+
+        expect(Range.closed(2,4).lowerBound, 2);
+        expect(Range.closed(1,4).lowerBound, 1);
+        expect(Range.closed(0,4).lowerBound, 0);
+        expect(Range.closed(-1,4).lowerBound, -1);
+        expect(Range.closed(4,4).lowerBound, 4);
+        expect(Range.closed(5,4).lowerBound, 4);
+        expect(Range.closed(7,4).lowerBound, 4);
+        expect(Range.closed(-5,4).lowerBound, -5);
+      });
+      test('upperBound', () {
+        expect(Range(2,4).upperBound, 3);
+        expect(Range(1,4).upperBound, 3);
+        expect(Range(0,4).upperBound, 3);
+        expect(Range(-1,4).upperBound, 3);
+        expect(Range(4,4).upperBound, 3);
+        expect(Range(5,4).upperBound, 5);
+        expect(Range(7,4).upperBound, 7);
+        expect(Range(-5,4).upperBound, 3);
+
+        expect(Range.closed(2,4).upperBound, 4);
+        expect(Range.closed(1,4).upperBound, 4);
+        expect(Range.closed(0,4).upperBound, 4);
+        expect(Range.closed(-1,4).upperBound, 4);
+        expect(Range.closed(4,4).upperBound, 4);
+        expect(Range.closed(5,4).upperBound, 5);
+        expect(Range.closed(7,4).upperBound, 7);
+        expect(Range.closed(-5,4).upperBound, 4);
+      });
+    });
+
+    group('randomElement', () {
+      group('not reversed', () {
+        group('positive', () {
+          test('normal', () {
+            for (int i = 0; i < 5; i++) {
+              for (int j = 0; j < 50; j++) {
+                if (i > j) { continue; }
+                final element = Range(i,j).randomElement;
+                expect(element == i || (element > i && element < j), isTrue);
+                final element2 = Range.closed(i,j).randomElement;
+                expect(element2 == i || (element2 > i && element2 <= j), isTrue);
+              }
+            }
+          });
+          test('By steps', () {
+            for (int i = 0; i < 5; i++) {
+              for (int j = 1; j < 50; j++) {
+                for (int s = 2; s < 4; s++) {
+                  if (i > j) { continue; }
+                  final element = Range.bySteps(i, j, stride: 2).randomElement;
+                  expect(element == i || (element > i && element <= j), isTrue);
+                  expect(element != i+1, isTrue);
+
+                  final element2 = Range.bySteps(i, j, stride: 2, closed: false).randomElement;
+                  expect(element2 == i || (element2 > i && element2 < j), isTrue);
+                  expect(element2 != i+1, isTrue);
+                }
+              }
+            }
+          });
+        });
+        group('negative', () {
+          test('normal', () {
+            for (int i = 0; i < 50; i++) {
+              for (int j = 0; j < 5; j++) {
+                if (-i > -j) { continue; }
+                final element = Range(-i,-j).randomElement;
+                expect(element == -i || (element > -i && element < -j), isTrue);
+                final element2 = Range.closed(-i,-j).randomElement;
+                expect(element2 == -i || (element2 > -i && element2 <= -j), isTrue);
+              }
+            }
+          });
+          test('By steps', () {
+            for (int i = 0; i < 50; i++) {
+              for (int j = 1; j < 5; j++) {
+                for (int s = 2; s < 4; s++) {
+                  if (-i > -j) { continue; }
+                  final element = Range.bySteps(-i, -j, stride: 2).randomElement;
+                  expect(element == -i || (element > -i && element <= -j), isTrue);
+                  expect(element != -i+1, isTrue);
+
+                  final element2 = Range.bySteps(-i, -j, stride: 2, closed: false).randomElement;
+                  expect(element2 == -i || (element2 > -i && element2 < -j), isTrue);
+                  expect(element2 != -i+1, isTrue);
+                }
+              }
+            }
+          });
+        });
+      });
+      group('reversed', () {
+        group('positive', () {
+          test('normal', () {
+            for (int i = 50; i > 0; i--) {
+              for (int j = 5; j > 0; j--) {
+                if (i < j) { continue; }
+                final element = Range(i,j).randomElement;
+                expect(element == i || (element < i && element > j), isTrue);
+                final element2 = Range.closed(i,j).randomElement;
+                expect(element2 == i || (element2 < i && element2 >= j), isTrue);
+              }
+            }
+          });
+          test('By steps', () {
+            for (int i = 50; i > 0; i--) {
+              for (int j = 5; j > 0; j--) {
+                for (int s = 2; s < 4; s++) {
+                  if (i < j) { continue; }
+
+                  final element = Range.bySteps(i, j, stride: 2).randomElement;
+                  expect(element == i || (element <= i && element >= j), isTrue);
+
+                  final element2 = Range.bySteps(i, j, stride: 2, closed: false).randomElement;
+                  expect(element2 == i || (element2 <= i && element2 > j), isTrue);
+                }
+              }
+            }
+          });
+        });
+        group('negative', () {
+          test('normal', () {
+            for (int i = 0; i < 5; i++) {
+              for (int j = 0; j < 50; j++) {
+                if (-i < -j) { continue; }
+                final element = Range(-i,-j).randomElement;
+                expect(element == -i || (element < -i && element > -j), isTrue);
+                final element2 = Range.closed(-i,-j).randomElement;
+                expect(element2 == -i || (element2 < -i && element2 >= -j), isTrue);
+              }
+            }
+          });
+          test('By steps', () {
+            for (int i = 0; i < 5; i++) {
+              for (int j = 1; j < 50; j++) {
+                for (int s = 2; s < 4; s++) {
+                  if (-i < -j) { continue; }
+
+                  final element = Range.bySteps(-i, -j, stride: 2).randomElement;
+                  expect(element == -i || (element <= -i && element >= -j), isTrue);
+
+                  final element2 = Range.bySteps(-i, -j, stride: 2, closed: false).randomElement;
+                  expect(element2 == -i || (element2 <= -i && element2 > -j), isTrue);
+                }
+              }
+            }
+          });
+        });
+      });
+    });
+
     group('sum', () {
       group('not reversed', () {
         group('positive', () {
@@ -289,6 +451,12 @@ void main() {
       });
       group('open', () {
         test('From zero', () {
+          expect(Range(7,3).contains(4.6), isTrue);
+          expect(Range(7,3).contains(7), isTrue);
+          expect(Range(7,3).contains(7.1), isFalse);
+          expect(Range(7,3).contains(3.1), isTrue);
+          expect(Range(7,3).contains(3), isFalse);
+          expect(Range(7,3).contains(2.9), isFalse);
           expect(Range(0,7).contains(0), isTrue);
           expect(Range(0,7).contains(-1), isFalse);
           expect(Range(0,7).contains(6), isTrue);

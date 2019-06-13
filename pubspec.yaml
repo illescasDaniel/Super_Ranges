@@ -1,6 +1,6 @@
 name: super_ranges
 description: Powerful yet intuitive Ranges for dart. Open, closed, reversed and by steps ranges.
-version: 1.1.0
+version: 1.2.0
 author: "Daniel Illescas Romero <illescas.daniel@protonmail.com>"
 homepage: https://github.com/illescasDaniel
 repository: https://github.com/illescasDaniel/Super_Ranges

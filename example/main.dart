@@ -19,4 +19,9 @@ void main() {
   print(Range.closed(5,0).sum);
 
   print(Range.bySteps(3,3, stride: 3).sum);
+
+  print(Range(6,2).lowerBound);
+  print(Range(6,2).upperBound);
+  print(Range(2,6).lowerBound);
+  print(Range(2,6).upperBound);
 }

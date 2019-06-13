@@ -24,13 +24,13 @@ abstract class BaseRange extends IterableBase<int>  {
           : _reverseRange(stride).iterator;
 
   Iterable<int> _range(int stride) sync* {
-    for (int i = lowerBound; i < upperBound; i += stride.abs()) {
+    for (int i = _lowerBound; i < _upperBound; i += stride.abs()) {
       yield i;
     }
   }
 
   Iterable<int> _reverseRange(int stride) sync* {
-    for (int i = upperBound; i > lowerBound; i -= stride.abs()) {
+    for (int i = _upperBound; i > _lowerBound; i -= stride.abs()) {
       yield i;
     }
   }
@@ -42,12 +42,12 @@ abstract class BaseRange extends IterableBase<int>  {
     if (ascending) {
       return _lowerBoundWithoutClose;
     }
-    return closed ? (_lowerBoundWithoutClose - 1) : _lowerBoundWithoutClose;
+    return closed ? _lowerBoundWithoutClose : _lowerBoundWithoutClose + 1;
   }
 
   int get upperBound {
     if (ascending) {
-      return closed ? (_upperBoundWithoutClose + 1) : _upperBoundWithoutClose;
+      return closed ? _upperBoundWithoutClose : _upperBoundWithoutClose-1;
     }
     return _upperBoundWithoutClose;
   }
@@ -72,9 +72,23 @@ abstract class BaseRange extends IterableBase<int>  {
     return "($start..$openRangeSymbol$end)";
   }
 
-  //
   int get expensiveLength => super.length;
+
   // Private
   int get _lowerBoundWithoutClose => ascending ? start : end;
   int get _upperBoundWithoutClose => ascending ? end : start;
+
+  int get _lowerBound {
+    if (ascending) {
+      return _lowerBoundWithoutClose;
+    }
+    return closed ? (_lowerBoundWithoutClose - 1) : _lowerBoundWithoutClose;
+  }
+
+  int get _upperBound {
+    if (ascending) {
+      return closed ? (_upperBoundWithoutClose + 1) : _upperBoundWithoutClose;
+    }
+    return _upperBoundWithoutClose;
+  }
 }

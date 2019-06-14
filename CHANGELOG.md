@@ -1,3 +1,5 @@
+## 1.3.0
+* Added `randomList` + made `randomElement` a function so it can accept a couple of arguments.
 ## 1.2.0
 * Added `randomElement` + fixed `lowerBound` and `upperBound`.
 ## 1.1.0+1

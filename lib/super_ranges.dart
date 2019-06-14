@@ -1,6 +1,7 @@
 library super_ranges;
 
 import 'dart:collection' show IterableBase;
+import 'dart:collection';
 import 'dart:math' deferred as Math show Random;
 
 part 'range.dart';

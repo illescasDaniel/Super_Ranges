@@ -21,7 +21,8 @@ class Range extends BaseRange {
 
   // Methods
 
-  int get randomElement => this._random(min: lowerBound, max: upperBound);
+  int randomElement({bool secure = false, int seed})
+    => this._random(min: lowerBound, max: upperBound, secure: secure, seed: seed);
 
   /// O(1) sum of the members
   @override

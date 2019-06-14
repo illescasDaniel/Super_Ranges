@@ -56,6 +56,10 @@ abstract class BaseRange extends IterableBase<int>  {
 
   int get sum;
 
+  List<int> randomList({bool secure = false, int seed}) =>
+      this.toList()
+        ..shuffle(secure ? Math.Random.secure() : Math.Random(seed));
+
   @override
   bool operator==(Object other) {
     return identical(this, other) || (other is BaseRange && (

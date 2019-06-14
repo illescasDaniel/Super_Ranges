@@ -6,6 +6,44 @@ import 'package:super_ranges/super_ranges.dart';
 void main() {
   group('Methods & properties', () {
 
+    group('random list', () {
+      test('basic', () {
+        final basicRange = Range(0,10);
+        final randomList = Range(0,10).randomList;
+        expect(basicRange.length, randomList().length);
+        expect(basicRange.length, 10);
+        for (final randomElement in randomList()) {
+          expect(randomElement >= 0 && randomElement < 10, isTrue);
+        }
+      });
+      group('open/closed', () {
+        test('closed', () {
+          for (int i = -7; i < 41; i++) {
+            for (int j = -70; j < 100; j++) {
+              final range = Range.closed(i, j);
+              final randomList = range.randomList();
+              expect(range.length, randomList.length);
+              for (final randomElement in randomList) {
+                range.contains(randomElement);
+              }
+            }
+          }
+        });
+        test('open', () {
+          for (int i = -7; i < 41; i++) {
+            for (int j = -70; j < 100; j++) {
+              final range = Range.closed(i,j);
+              final randomList = range.randomList();
+              expect(range.length, randomList.length);
+              for (final randomElement in randomList) {
+                range.contains(randomElement);
+              }
+            }
+          }
+        });
+      });
+    });
+
     group('lower/upper bounds', () {
       test('lowerBound', () {
         expect(Range(2,4).lowerBound, 2);
@@ -54,9 +92,9 @@ void main() {
             for (int i = 0; i < 5; i++) {
               for (int j = 0; j < 50; j++) {
                 if (i > j) { continue; }
-                final element = Range(i,j).randomElement;
+                final element = Range(i,j).randomElement();
                 expect(element == i || (element > i && element < j), isTrue);
-                final element2 = Range.closed(i,j).randomElement;
+                final element2 = Range.closed(i,j).randomElement();
                 expect(element2 == i || (element2 > i && element2 <= j), isTrue);
               }
             }
@@ -66,11 +104,11 @@ void main() {
               for (int j = 1; j < 50; j++) {
                 for (int s = 2; s < 4; s++) {
                   if (i > j) { continue; }
-                  final element = Range.bySteps(i, j, stride: 2).randomElement;
+                  final element = Range.bySteps(i, j, stride: 2).randomElement();
                   expect(element == i || (element > i && element <= j), isTrue);
                   expect(element != i+1, isTrue);
 
-                  final element2 = Range.bySteps(i, j, stride: 2, closed: false).randomElement;
+                  final element2 = Range.bySteps(i, j, stride: 2, closed: false).randomElement();
                   expect(element2 == i || (element2 > i && element2 < j), isTrue);
                   expect(element2 != i+1, isTrue);
                 }
@@ -83,9 +121,9 @@ void main() {
             for (int i = 0; i < 50; i++) {
               for (int j = 0; j < 5; j++) {
                 if (-i > -j) { continue; }
-                final element = Range(-i,-j).randomElement;
+                final element = Range(-i,-j).randomElement();
                 expect(element == -i || (element > -i && element < -j), isTrue);
-                final element2 = Range.closed(-i,-j).randomElement;
+                final element2 = Range.closed(-i,-j).randomElement();
                 expect(element2 == -i || (element2 > -i && element2 <= -j), isTrue);
               }
             }
@@ -95,11 +133,11 @@ void main() {
               for (int j = 1; j < 5; j++) {
                 for (int s = 2; s < 4; s++) {
                   if (-i > -j) { continue; }
-                  final element = Range.bySteps(-i, -j, stride: 2).randomElement;
+                  final element = Range.bySteps(-i, -j, stride: 2).randomElement();
                   expect(element == -i || (element > -i && element <= -j), isTrue);
                   expect(element != -i+1, isTrue);
 
-                  final element2 = Range.bySteps(-i, -j, stride: 2, closed: false).randomElement;
+                  final element2 = Range.bySteps(-i, -j, stride: 2, closed: false).randomElement();
                   expect(element2 == -i || (element2 > -i && element2 < -j), isTrue);
                   expect(element2 != -i+1, isTrue);
                 }
@@ -114,9 +152,9 @@ void main() {
             for (int i = 50; i > 0; i--) {
               for (int j = 5; j > 0; j--) {
                 if (i < j) { continue; }
-                final element = Range(i,j).randomElement;
+                final element = Range(i,j).randomElement();
                 expect(element == i || (element < i && element > j), isTrue);
-                final element2 = Range.closed(i,j).randomElement;
+                final element2 = Range.closed(i,j).randomElement();
                 expect(element2 == i || (element2 < i && element2 >= j), isTrue);
               }
             }
@@ -127,10 +165,10 @@ void main() {
                 for (int s = 2; s < 4; s++) {
                   if (i < j) { continue; }
 
-                  final element = Range.bySteps(i, j, stride: 2).randomElement;
+                  final element = Range.bySteps(i, j, stride: 2).randomElement();
                   expect(element == i || (element <= i && element >= j), isTrue);
 
-                  final element2 = Range.bySteps(i, j, stride: 2, closed: false).randomElement;
+                  final element2 = Range.bySteps(i, j, stride: 2, closed: false).randomElement();
                   expect(element2 == i || (element2 <= i && element2 > j), isTrue);
                 }
               }
@@ -142,9 +180,9 @@ void main() {
             for (int i = 0; i < 5; i++) {
               for (int j = 0; j < 50; j++) {
                 if (-i < -j) { continue; }
-                final element = Range(-i,-j).randomElement;
+                final element = Range(-i,-j).randomElement();
                 expect(element == -i || (element < -i && element > -j), isTrue);
-                final element2 = Range.closed(-i,-j).randomElement;
+                final element2 = Range.closed(-i,-j).randomElement();
                 expect(element2 == -i || (element2 < -i && element2 >= -j), isTrue);
               }
             }
@@ -155,10 +193,10 @@ void main() {
                 for (int s = 2; s < 4; s++) {
                   if (-i < -j) { continue; }
 
-                  final element = Range.bySteps(-i, -j, stride: 2).randomElement;
+                  final element = Range.bySteps(-i, -j, stride: 2).randomElement();
                   expect(element == -i || (element <= -i && element >= -j), isTrue);
 
-                  final element2 = Range.bySteps(-i, -j, stride: 2, closed: false).randomElement;
+                  final element2 = Range.bySteps(-i, -j, stride: 2, closed: false).randomElement();
                   expect(element2 == -i || (element2 <= -i && element2 > -j), isTrue);
                 }
               }

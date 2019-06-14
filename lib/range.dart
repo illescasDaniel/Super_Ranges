@@ -41,8 +41,9 @@ class Range extends BaseRange {
   @override
   int get length => this._upperBound - this._lowerBound;
 
-  /// O(1) method to know if a values is contained within the range.
-  /// If a list object is passed it will iterate that list, so it can be O(n)
+  /// O(1) method to know if a value is contained within the range.
+  /// If a list object is passed, it will iterate that list, so it can be O(n).
+  /// It accepts int`, `num` or `List<num>`
   @override
   bool contains(Object value) {
     if (value is int) {

@@ -16,14 +16,14 @@ class StrideRange extends BaseRange {
 
   // Methods
 
-  // TODO: improve length to be O(1)
+  // TODO: improve `length to be O(1)
   /*@override
   int get length {
     if (this.stride == 1) {
       return this.upperBound - this.lowerBound;
     }
     //
-    return this.expensiveLength;
+    return this.expensiveLength;`
   }*/
 
   @override
@@ -33,7 +33,7 @@ class StrideRange extends BaseRange {
     return "($start..$openRangeSymbol$end$stepsString)";
   }
 
-  // TODO: `contains` should be different (?)
+  // TODO: can `contains` be O(1)?
 
   /// O(n) sum of the members
   @override

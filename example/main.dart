@@ -24,4 +24,12 @@ void main() {
   print(Range(6,2).upperBound);
   print(Range(2,6).lowerBound);
   print(Range(2,6).upperBound);
+
+  for (final i in Range.to(10)) {
+    print(i);
+  }
+
+  for (final i in Range.toInclusive(10)) {
+    print(i);
+  }
 }

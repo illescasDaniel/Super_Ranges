@@ -1,6 +1,6 @@
 part of super_ranges;
 
-class StrideRange extends BaseRange {
+class StrideRange extends BaseRange with RandomOnRange {
 
   // Properties
   final int start, end;
@@ -42,13 +42,5 @@ class StrideRange extends BaseRange {
       return this.closed ? this.start : 0;
     }
     return this.reduce((acc, newValue) => acc + newValue);
-  }
-
-  int randomElement({bool secure = false, int seed}) {
-    final elements = this.toList();
-    if (elements.length < 2) { return this.lowerBound; }
-    final random = secure ? Math.Random.secure() : Math.Random(seed);
-    final index = random.nextInt(elements.length);
-    return elements[index];
   }
 }

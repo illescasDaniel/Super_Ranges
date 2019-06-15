@@ -56,10 +56,6 @@ abstract class BaseRange extends IterableBase<int>  {
 
   int get sum;
 
-  List<int> randomList({bool secure = false, int seed}) =>
-      this.toList()
-        ..shuffle(secure ? Math.Random.secure() : Math.Random(seed));
-
   @override
   bool operator==(Object other) {
     return identical(this, other) || (other is BaseRange && (
@@ -75,8 +71,6 @@ abstract class BaseRange extends IterableBase<int>  {
     final openRangeSymbol = closed ? "." : (ascending ? "<" :">");
     return "($start..$openRangeSymbol$end)";
   }
-
-  int get expensiveLength => super.length;
 
   // Private
   int get _lowerBoundWithoutClose => ascending ? start : end;
@@ -94,5 +88,20 @@ abstract class BaseRange extends IterableBase<int>  {
       return closed ? (_upperBoundWithoutClose + 1) : _upperBoundWithoutClose;
     }
     return _upperBoundWithoutClose;
+  }
+}
+
+mixin RandomOnRange on BaseRange {
+
+  List<int> randomList({bool secure = false, int seed}) =>
+      this.toList()
+        ..shuffle(secure ? Math.Random.secure() : Math.Random(seed));
+
+  int randomElement({bool secure = false, int seed}) {
+    final elements = this.toList();
+    if (elements.length < 2) { return this.lowerBound; }
+    final random = secure ? Math.Random.secure() : Math.Random(seed);
+    final index = random.nextInt(elements.length);
+    return elements[index];
   }
 }

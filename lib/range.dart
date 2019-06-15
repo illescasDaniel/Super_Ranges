@@ -1,6 +1,6 @@
 part of super_ranges;
 
-class Range extends BaseRange {
+class Range extends BaseRange with RandomOnRange {
 
   // Properties
   final int start, end;
@@ -8,6 +8,8 @@ class Range extends BaseRange {
 
   // Constructors
   const Range(this.start, this.end, {this.closed = false}) : super(start: start, end: end, closed: closed);
+  const Range.to(this.end) : this.start = 0, this.closed = false, super(start: 0, end: end, closed: true);
+  const Range.toInclusive(this.end) : this.start = 0, this.closed = true, super(start: 0, end: end, closed: true);
   const Range.named({this.start, this.end, this.closed}) : super(start: start, end: end, closed: closed);
   const Range.closed(this.start, this.end) : this.closed = true,  super(start: start, end: end, closed: true);
 
@@ -21,6 +23,7 @@ class Range extends BaseRange {
 
   // Methods
 
+  @override
   int randomElement({bool secure = false, int seed})
     => this._random(min: lowerBound, max: upperBound, secure: secure, seed: seed);
 
@@ -40,6 +43,9 @@ class Range extends BaseRange {
   /// O(1) count of the members. Use `expensiveLength` for default O(n) implementation.
   @override
   int get length => this._upperBound - this._lowerBound;
+
+  /// O(n) default implementation to get the length.
+  int get expensiveLength => super.length;
 
   /// O(1) method to know if a value is contained within the range.
   /// If a list object is passed, it will iterate that list, so it can be O(n).

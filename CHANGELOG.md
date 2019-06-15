@@ -1,3 +1,5 @@
+## 1.4.0
+* Added a couple constructors for `Range`: `Rang.to` + `Range.toInclusive`.
 ## 1.3.0+1
 * Added `randomList` + made `randomElement` a function so it can accept a couple of arguments.
 ## 1.2.0
